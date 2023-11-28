@@ -1,6 +1,18 @@
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {RootStackParamList} from '../navigation/types';
 
 const DATA = [
   {
@@ -17,21 +29,35 @@ const DATA = [
   },
 ];
 
-type ItemProps = {title: string};
+type ItemProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'home'>;
+  id: string;
+  title: string;
+};
 
-const Item = ({title}: ItemProps) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
-  </View>
+const Item = ({navigation, id, title}: ItemProps) => (
+  <TouchableOpacity
+    onPress={() => {
+      navigation.navigate('second', {id, title});
+    }}>
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
+  </TouchableOpacity>
 );
 
-export default function App() {
+export interface HomeScreenProps
+  extends NativeStackScreenProps<RootStackParamList, 'home'> {}
+
+export default function HomeScreen({navigation}: HomeScreenProps) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
       <FlatList
         data={DATA}
-        renderItem={({item}) => <Item title={item.title} />}
+        renderItem={({item}) => (
+          <Item navigation={navigation} id={item.id} title={item.title} />
+        )}
         keyExtractor={item => item.id}
       />
     </SafeAreaView>

@@ -1,1 +1,3 @@
-# licenta
+# Licenta
+
+Licenta lui Tudoras

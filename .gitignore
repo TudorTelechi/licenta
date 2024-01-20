@@ -10,6 +10,7 @@ web-build/
 
 # Native
 *.orig.*
+*.env*
 *.jks
 *.p8
 *.p12
@@ -33,3 +34,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+#
+%ProgramData%

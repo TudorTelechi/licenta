@@ -1,36 +1,36 @@
-import { Pressable, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import styled from "styled-components/native";
-import { StatusBar } from "expo-status-bar";
-import { Header } from "../../components";
-import { Button, Input } from "../../components/ui";
-import { useState } from "react";
-import { ErrorText, RegularText } from "../../components/StyledText";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useFirebaseAuth } from "../../hooks";
-import { useUserStore } from "../../store/useUserStore";
-import { useForm, Controller } from "react-hook-form";
-import { RegisterSchema } from "../../schemas";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { auth } from "../../config/firebaseConfig";
+import {zodResolver} from '@hookform/resolvers/zod';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {StatusBar} from 'expo-status-bar';
+import {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
+import {TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
+import {z} from 'zod';
+import {Header} from '../../components';
+import {ErrorText, RegularText} from '../../components/StyledText';
+import {Button, Input} from '../../components/ui';
+import {auth} from '../../config/firebaseConfig';
+import {useFirebaseAuth} from '../../hooks';
+import {RegisterSchema} from '../../schemas';
+import {useUserStore} from '../../store/useUserStore';
 
 type RegisterInputType = z.infer<typeof RegisterSchema>;
 
 export default function SignupScreen() {
   const [loading, setLoading] = useState(false);
-  const { navigate }: NavigationProp<AuthNavigationType> = useNavigation();
-  const { signUpWithEmail } = useFirebaseAuth();
-  const { setUser, setSession } = useUserStore();
+  const {navigate}: NavigationProp<AuthNavigationType> = useNavigation();
+  const {signUpWithEmail} = useFirebaseAuth();
+  const {setUser, setSession} = useUserStore();
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<RegisterInputType>({
     resolver: zodResolver(RegisterSchema),
   });
 
-  async function onSubmit({ email, password }: RegisterInputType) {
+  async function onSubmit({email, password}: RegisterInputType) {
     setLoading(true);
     try {
       const data = await signUpWithEmail(email, password);
@@ -49,7 +49,7 @@ export default function SignupScreen() {
         setUser(data.user);
       }
 
-      navigate("Login");
+      navigate('Login');
     } catch (e) {
       console.log(e);
     }
@@ -60,8 +60,8 @@ export default function SignupScreen() {
       <View>
         <StatusBar style="dark" />
         <Header
-          title="Sign up"
-          description="Fill in the fields below to create an account"
+          title="Inregistreaza-te"
+          description="Completeaza campurile de mai jos pentru a creea un cont"
           canGoBack
           screen="Login"
         />
@@ -70,12 +70,12 @@ export default function SignupScreen() {
           <Controller
             name="email"
             control={control}
-            render={({ field }) => (
+            render={({field}) => (
               <InputView>
                 <Input
                   value={field.value}
-                  onChangeText={(e) => field.onChange(e)}
-                  placeholder="Enter your email address"
+                  onChangeText={e => field.onChange(e)}
+                  placeholder="Introdu adresa de Email"
                   label="Email"
                 />
                 {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
@@ -85,13 +85,13 @@ export default function SignupScreen() {
           <Controller
             name="password"
             control={control}
-            render={({ field }) => (
+            render={({field}) => (
               <InputView>
                 <Input
                   value={field.value}
-                  onChangeText={(e) => field.onChange(e)}
-                  placeholder="Enter your password"
-                  label="Password"
+                  onChangeText={e => field.onChange(e)}
+                  placeholder="Introdu parola"
+                  label="Parola"
                   isPassword
                 />
                 {errors.password && (
@@ -103,13 +103,13 @@ export default function SignupScreen() {
           <Controller
             name="confirmPassword"
             control={control}
-            render={({ field }) => (
+            render={({field}) => (
               <InputView>
                 <Input
                   value={field.value}
-                  onChangeText={(e) => field.onChange(e)}
-                  placeholder="Re-enter your password"
-                  label="Confirm Password"
+                  onChangeText={e => field.onChange(e)}
+                  placeholder="Re-introduceti parola"
+                  label="Confirmare Parola"
                   isPassword
                 />
                 {errors.confirmPassword && (
@@ -123,12 +123,12 @@ export default function SignupScreen() {
 
       <BottomView>
         <Button
-          title="Next"
+          title="Continuare"
           onPress={handleSubmit(onSubmit)}
           isLoading={loading}
         />
-        <TouchableOpacity onPress={() => navigate("Login")}>
-          <RegularText>Already have an account? Head to login</RegularText>
+        <TouchableOpacity onPress={() => navigate('Login')}>
+          <RegularText>Ai deja un cont? Logeaza-te</RegularText>
         </TouchableOpacity>
       </BottomView>
     </Container>

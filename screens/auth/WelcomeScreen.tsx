@@ -1,27 +1,25 @@
-import { StatusBar } from "expo-status-bar";
-import { View, ImageBackground, TouchableOpacity } from "react-native";
-import styled from "styled-components/native";
-import { HeadingText } from "../../components/StyledText";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Button } from "../../components/ui";
-import { Ionicons } from "@expo/vector-icons";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import {Ionicons} from '@expo/vector-icons';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {StatusBar} from 'expo-status-bar';
+import {ImageBackground, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
+import {HeadingText} from '../../components/StyledText';
 
 export default function WelcomeScreen() {
-  const { navigate }: NavigationProp<AuthNavigationType> = useNavigation();
+  const {navigate}: NavigationProp<AuthNavigationType> = useNavigation();
 
   return (
     <Container>
       <StatusBar style="light" />
       <HeroImage
-        source={require("../../assets/images/hero.jpg")}
-        style={{ backgroundColor: "rgba(0, 0, 0, 1)" }}
-        imageStyle={{ opacity: 0.8 }}
-      >
+        source={require('../../assets/images/hero.jpg')}
+        style={{backgroundColor: 'rgba(0, 0, 0, 1)'}}
+        imageStyle={{opacity: 0.8}}>
         <SafeAreaContainer>
           <TextContainer>
-            <Heading>Welcome to Travenor</Heading>
-            <ButtonContainer onPress={() => navigate("Login")}>
+            <Heading>Bun Venit</Heading>
+            <ButtonContainer onPress={() => navigate('Login')}>
               <Ionicons name="arrow-forward" size={25} color="#000" />
             </ButtonContainer>
           </TextContainer>

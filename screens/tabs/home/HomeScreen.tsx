@@ -1,44 +1,43 @@
-import { View, FlatList, TouchableOpacity, Image } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import styled from "styled-components/native";
-import { CategoryData } from "../../../constants/categories";
+import {Ionicons} from '@expo/vector-icons';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useState} from 'react';
+import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
 import {
   BoldText,
   HeadingText,
   MediumText,
   RegularText,
-} from "../../../components/StyledText";
-import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+} from '../../../components/StyledText';
+import {CategoryData} from '../../../constants/categories';
 
 export default function HomeScreen() {
-  const [activeCategory, setActiveCategory] = useState("");
-  const { navigate }: NavigationProp<TabNavigationType> = useNavigation();
+  const [activeCategory, setActiveCategory] = useState('');
+  const {navigate}: NavigationProp<TabNavigationType> = useNavigation();
 
   return (
     <Container>
       <HeaderViewContainer>
-        <HeadingText>Welcome user</HeadingText>
-        <UserAvatar onPress={() => navigate("ProfileNavigation")}>
-          <Ionicons name="person" size={12} color={"#000"} />
+        <HeadingText>Bine ai venit!!!</HeadingText>
+        <UserAvatar onPress={() => navigate('ProfileNavigation')}>
+          <Ionicons name="person" size={12} color={'#000'} />
         </UserAvatar>
       </HeaderViewContainer>
 
       <FlatListContainer>
-        <MediumText>Select a category from below</MediumText>
+        <MediumText>Alege o categorie de mai jos</MediumText>
         <FlatList
           data={CategoryData}
           scrollEnabled={false}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <IconContainer
               style={{
                 backgroundColor:
-                  item.title === activeCategory ? "#000" : "#fff",
+                  item.title === activeCategory ? '#000' : '#fff',
                 borderWidth: item.title === activeCategory ? 0 : 1,
               }}
-              onPress={() => setActiveCategory(item.title)}
-            >
+              onPress={() => setActiveCategory(item.title)}>
               <Icon source={item.image} />
               {item.title === activeCategory ? (
                 <Bold>{item.title}</Bold>
@@ -48,7 +47,7 @@ export default function HomeScreen() {
             </IconContainer>
           )}
           horizontal
-          contentContainerStyle={{ gap: 12, width: "100%", flexWrap: "wrap" }}
+          contentContainerStyle={{gap: 12, width: '100%', flexWrap: 'wrap'}}
           showsHorizontalScrollIndicator={false}
         />
       </FlatListContainer>

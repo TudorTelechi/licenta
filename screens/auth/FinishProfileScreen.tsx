@@ -1,17 +1,17 @@
-import { Pressable, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import styled from "styled-components/native";
-import { StatusBar } from "expo-status-bar";
-import { Header } from "../../components";
-import { Button } from "../../components/ui";
-import { useState } from "react";
-import { RegularText } from "../../components/StyledText";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import {Ionicons} from '@expo/vector-icons';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {StatusBar} from 'expo-status-bar';
+import {useState} from 'react';
+import {Pressable, TouchableOpacity, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
+import {Header} from '../../components';
+import {RegularText} from '../../components/StyledText';
+import {Button} from '../../components/ui';
 
 export default function FinishProfileScreen() {
-  const [avatarUrl, setavatarUrl] = useState("");
-  const { navigate }: NavigationProp<AuthNavigationType> = useNavigation();
+  const [avatarUrl, setavatarUrl] = useState('');
+  const {navigate}: NavigationProp<AuthNavigationType> = useNavigation();
 
   async function handleAddAvatarToProfile() {}
 
@@ -28,7 +28,7 @@ export default function FinishProfileScreen() {
 
         <AvatarContainer>
           <Ionicons name="cloud-upload-outline" size={24} />
-          <Regular>Click to upload an image</Regular>
+          <Regular>Apasa pentru a incarca o imagine</Regular>
         </AvatarContainer>
       </View>
 
@@ -37,8 +37,8 @@ export default function FinishProfileScreen() {
           title="Create account"
           onPress={() => handleAddAvatarToProfile()}
         />
-        <Pressable onPress={() => navigate("Login")}>
-          <RegularText>Already have an account? Head to login</RegularText>
+        <Pressable onPress={() => navigate('Login')}>
+          <RegularText>Ai deja un cont ? Catre LogIn</RegularText>
         </Pressable>
       </BottomView>
     </Container>

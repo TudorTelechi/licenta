@@ -63,7 +63,7 @@ export default function ProfileScreen() {
       <StatusBar style="dark" />
       <Header
         title="Profile"
-        description="View your profile below"
+        description="Vizualizeaza-ti profil-ul"
         canGoBack
         screen="Home"
       />
@@ -72,17 +72,17 @@ export default function ProfileScreen() {
         <Input
           value={username}
           onChangeText={() => {}}
-          label="Username"
+          label="Nume de utilizator"
           disabled
         />
         <Input
           value={fullName}
           onChangeText={() => {}}
-          label="Full name"
+          label="Nume complet"
           disabled
         />
         <Button
-          title="Edit profile"
+          title="Editeaza profilul"
           onPress={() => navigate('EditProfile')}
           isLoading={loading}
         />

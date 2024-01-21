@@ -1,19 +1,19 @@
+import {zodResolver} from '@hookform/resolvers/zod';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {StatusBar} from 'expo-status-bar';
+import {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 import {TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
-import {StatusBar} from 'expo-status-bar';
-import {Header} from '../../components';
-import {Button, Input} from '../../components/ui';
-import {useState} from 'react';
-import {ErrorText, RegularText} from '../../components/StyledText';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {useFirebaseAuth} from '../../hooks';
-import {useUserStore} from '../../store/useUserStore';
-import {useForm, Controller} from 'react-hook-form';
-import {LoginSchema} from '../../schemas';
 import {z} from 'zod';
-import {zodResolver} from '@hookform/resolvers/zod';
+import {Header} from '../../components';
+import {ErrorText, RegularText} from '../../components/StyledText';
+import {Button, Input} from '../../components/ui';
 import {auth} from '../../config/firebaseConfig';
+import {useFirebaseAuth} from '../../hooks';
+import {LoginSchema} from '../../schemas';
+import {useUserStore} from '../../store/useUserStore';
 
 type LoginInputType = z.infer<typeof LoginSchema>;
 
@@ -61,8 +61,8 @@ export default function LoginScreen() {
       <View>
         <StatusBar style="dark" />
         <Header
-          title="Login"
-          description="Fill in the fields below to log back in"
+          title="LogIn"
+          description="Completeaza campurile de mai jos"
           canGoBack
           screen="Welcome"
         />
@@ -76,7 +76,7 @@ export default function LoginScreen() {
                 <Input
                   value={field.value}
                   onChangeText={e => field.onChange(e)}
-                  placeholder="Enter your email address"
+                  placeholder="Introdu adresa de Email"
                   label="Email"
                 />
                 {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
@@ -91,8 +91,8 @@ export default function LoginScreen() {
                 <Input
                   value={field.value}
                   onChangeText={e => field.onChange(e)}
-                  placeholder="Enter your password"
-                  label="Password"
+                  placeholder="Introdu parola"
+                  label="Parola"
                   isPassword
                 />
                 {errors.password && (
@@ -111,7 +111,7 @@ export default function LoginScreen() {
           isLoading={loading}
         />
         <TouchableOpacity onPress={() => navigate('Signup')}>
-          <RegularText>Don't have an account? Create one now</RegularText>
+          <RegularText>Nu ai un cont? Creaza unul acum</RegularText>
         </TouchableOpacity>
       </BottomView>
     </Container>

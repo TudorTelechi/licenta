@@ -11,10 +11,24 @@ import {
   RegularText,
 } from '../../../components/StyledText';
 import {CategoryData} from '../../../constants/categories';
+import {PlacesData, PlacesDataType} from '../../../constants/places';
 
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const {navigate}: NavigationProp<TabNavigationType> = useNavigation();
+
+  // Filter places based on the active category and search query
+  const filteredPlaces: PlacesDataType[] = PlacesData.filter(
+    place =>
+      place.category === activeCategory &&
+      place.location.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  // Function to handle search
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   return (
     <Container>
@@ -51,6 +65,15 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false}
         />
       </FlatListContainer>
+      {/* Render the filtered places */}
+      <View>
+        {filteredPlaces.map(place => (
+          <TouchableOpacity key={place.id}>
+            <Image source={place.image} />
+            <Text>{place.location}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </Container>
   );
 }

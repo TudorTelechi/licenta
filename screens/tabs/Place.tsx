@@ -14,6 +14,8 @@ export default function PlaceScreen() {
     return PlacesData.find(place => place.id === placeId);
   }, [placeId]);
 
+  console.log(place);
+
   return (
     <Container>
       <Header
@@ -23,6 +25,7 @@ export default function PlaceScreen() {
         screen="Home"
       />
       <Text>{place?.id}</Text>
+      <Text>{place?.details}</Text>
     </Container>
   );
 }

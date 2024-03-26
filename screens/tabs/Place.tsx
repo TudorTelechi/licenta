@@ -1,6 +1,6 @@
 import {useRoute} from '@react-navigation/native';
 import {useMemo} from 'react';
-import {Text} from 'react-native-paper';
+import {Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../components';
@@ -18,14 +18,14 @@ export default function PlaceScreen() {
 
   return (
     <Container>
-      <Header
-        title="Detalii"
-        description={place?.location}
-        canGoBack
-        screen="Home"
-      />
-      <Text>{place?.id}</Text>
-      <Text>{place?.details}</Text>
+      <Header title="Detalii" canGoBack screen="Home" />
+      <Card mode="contained">
+        {place && <Card.Cover source={place?.image} />}
+        <Card.Content>
+          <Text variant="titleLarge">{place?.location}</Text>
+          <Text variant="bodyMedium">{place?.details}</Text>
+        </Card.Content>
+      </Card>
     </Container>
   );
 }

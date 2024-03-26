@@ -2,6 +2,8 @@ import {Ionicons} from '@expo/vector-icons';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Button, Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {
@@ -14,15 +16,15 @@ import {CategoryData} from '../../../constants/categories';
 import {PlacesData, PlacesDataType} from '../../../constants/places';
 
 export default function HomeScreen() {
-  const [activeCategory, setActiveCategory] = useState('');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const {navigate}: NavigationProp<TabNavigationType> = useNavigation();
 
+  console.log({activeCategory});
   // Filter places based on the active category and search query
   const filteredPlaces: PlacesDataType[] = PlacesData.filter(
-    place =>
-      place.category === activeCategory &&
-      place.location.toLowerCase().includes(searchQuery.toLowerCase()),
+    place => activeCategory == 'all' || place.category === activeCategory,
+    // && place.location.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // Function to handle search
@@ -31,50 +33,68 @@ export default function HomeScreen() {
   };
 
   return (
-    <Container>
-      <HeaderViewContainer>
-        <HeadingText>Bine ai venit!!!</HeadingText>
-        <UserAvatar onPress={() => navigate('ProfileNavigation')}>
-          <Ionicons name="person" size={12} color={'#000'} />
-        </UserAvatar>
-      </HeaderViewContainer>
+    <ScrollView>
+      <Container>
+        <HeaderViewContainer>
+          <HeadingText>Bine ai venit!!!</HeadingText>
+          <UserAvatar onPress={() => navigate('ProfileNavigation')}>
+            <Ionicons name="person" size={12} color={'#000'} />
+          </UserAvatar>
+        </HeaderViewContainer>
 
-      <FlatListContainer>
-        <MediumText>Alege o categorie de mai jos</MediumText>
-        <FlatList
-          data={CategoryData}
-          scrollEnabled={false}
-          renderItem={({item}) => (
-            <IconContainer
-              style={{
-                backgroundColor:
-                  item.title === activeCategory ? '#000' : '#fff',
-                borderWidth: item.title === activeCategory ? 0 : 1,
-              }}
-              onPress={() => setActiveCategory(item.title)}>
-              <Icon source={item.image} />
-              {item.title === activeCategory ? (
-                <Bold>{item.title}</Bold>
-              ) : (
-                <RegularText>{item.title}</RegularText>
-              )}
-            </IconContainer>
-          )}
-          horizontal
-          contentContainerStyle={{gap: 12, width: '100%', flexWrap: 'wrap'}}
-          showsHorizontalScrollIndicator={false}
-        />
-      </FlatListContainer>
-      {/* Render the filtered places */}
-      <View>
-        {filteredPlaces.map(place => (
-          <TouchableOpacity key={place.id}>
-            <Image source={place.image} />
-            <Text>{place.location}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </Container>
+        <FlatListContainer>
+          <MediumText>Alege o categorie de mai jos</MediumText>
+          <FlatList
+            data={CategoryData}
+            scrollEnabled={false}
+            renderItem={({item}) => (
+              <IconContainer
+                style={{
+                  backgroundColor:
+                    item.title === activeCategory ? '#000' : '#fff',
+                  borderWidth: item.value === activeCategory ? 0 : 1,
+                }}
+                onPress={() => setActiveCategory(item.value)}>
+                <Icon source={item.image} />
+                {item.value === activeCategory ? (
+                  <BoldText>{item.title}</BoldText>
+                ) : (
+                  <RegularText>{item.title}</RegularText>
+                )}
+              </IconContainer>
+            )}
+            horizontal
+            contentContainerStyle={{gap: 12, width: '100%', flexWrap: 'wrap'}}
+            showsHorizontalScrollIndicator={false}
+          />
+        </FlatListContainer>
+        {/* Render the filtered places */}
+        <View>
+          {filteredPlaces.map(place => (
+            <ItemContainer>
+              <Card mode="outlined">
+                <Card.Cover source={place.image} />
+                <Card.Content>
+                  <Text variant="titleLarge">{place.location}</Text>
+                  <Text variant="bodyMedium">
+                    {CategoryData.find(x => x?.value === place.category)
+                      ?.title || ''}
+                  </Text>
+                </Card.Content>
+                <Card.Actions>
+                  <Button
+                    onPress={() => {
+                      navigate('PlaceScreen', {placeId: place.id});
+                    }}>
+                    Vezi detalii
+                  </Button>
+                </Card.Actions>
+              </Card>
+            </ItemContainer>
+          ))}
+        </View>
+      </Container>
+    </ScrollView>
   );
 }
 
@@ -101,6 +121,11 @@ const UserAvatar = styled(TouchableOpacity)`
 `;
 
 const FlatListContainer = styled(View)`
+  gap: 12px;
+  margin-top: 24px;
+`;
+
+const ItemContainer = styled(View)`
   gap: 12px;
   margin-top: 24px;
 `;

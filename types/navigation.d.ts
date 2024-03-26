@@ -14,6 +14,7 @@ type TabNavigationType = {
   HomeNavigation: undefined;
   ExploreNavigation: undefined;
   BookmarksNavigation: undefined;
+  PlaceScreen: {placeId: number};
 };
 
 //tabs nav types

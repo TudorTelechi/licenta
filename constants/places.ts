@@ -27,4 +27,10 @@ export const PlacesData: PlacesDataType[] = [
     category: 'lakes',
     image: MammothLake,
   },
+  {
+    id: 3,
+    location: 'Carpati',
+    category: 'mountains',
+    image: MammothLake,
+  },
 ];

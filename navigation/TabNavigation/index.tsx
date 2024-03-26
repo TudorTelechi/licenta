@@ -1,10 +1,7 @@
-import {
-  TransitionPresets,
-  createStackNavigator,
-} from "@react-navigation/stack";
-import HomeNavigation from "./HomeNavigation";
-import ProfileScreen from "../../screens/tabs/profile/ProfileScreen";
-import ProfileNavigation from "./ProfileNavigation";
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import PlaceScreen from '../../screens/tabs/Place';
+import HomeNavigation from './HomeNavigation';
+import ProfileNavigation from './ProfileNavigation';
 
 const Stack = createStackNavigator<TabNavigationType>();
 
@@ -16,11 +13,11 @@ export default function TabNavigation() {
         ...TransitionPresets.SlideFromRightIOS,
         animationEnabled: true,
         gestureEnabled: true,
-        gestureDirection: "horizontal",
-      }}
-    >
+        gestureDirection: 'horizontal',
+      }}>
       <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
       <Stack.Screen name="ProfileNavigation" component={ProfileNavigation} />
+      <Stack.Screen name="PlaceScreen" component={PlaceScreen} />
     </Stack.Navigator>
   );
 }

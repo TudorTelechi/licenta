@@ -1,3 +1,7 @@
+export {default as bran} from './bran.jpg';
+export {default as Bucura} from './bucura.jpg';
+export {default as Carpati} from './carpati.jpg';
+export {default as Corvinilor} from './corvinilor.jpg';
 export {default as GlobeIcon} from './globe.png';
 export {default as UserAvatar} from './icon.jpg';
 export {default as MammothLake} from './mammoth-lake.jpg';

@@ -1,5 +1,5 @@
 import {ImageSourcePropType} from 'react-native';
-import {MammothLake, OsakaCastle, TokyoTemple} from '../assets/images';
+import {bran, Bucura, Carpati, Corvinilor} from '../assets/images';
 
 export type PlacesDataType = {
   id: number;
@@ -15,27 +15,27 @@ export const PlacesData: PlacesDataType[] = [
     location: 'Castelul Bran',
     details: '',
     category: 'temples',
-    image: OsakaCastle,
+    image: bran,
   },
   {
     id: 1,
-    location: 'Tokyo Temple',
+    location: 'Castelul Corvinilor',
     details: 'blablabla',
     category: 'temples',
-    image: TokyoTemple,
+    image: Corvinilor,
   },
   {
     id: 2,
-    location: 'Mammoth Lake',
+    location: 'Lacul Bucura',
     details: '',
     category: 'lakes',
-    image: MammothLake,
+    image: Bucura,
   },
   {
     id: 3,
     location: 'Carpati',
     details: '',
     category: 'mountains',
-    image: MammothLake,
+    image: Carpati,
   },
 ];

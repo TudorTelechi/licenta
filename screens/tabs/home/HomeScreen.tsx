@@ -2,6 +2,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
 import {FlatList, Image, TouchableOpacity, View} from 'react-native';
+import FAB from 'react-native-fab';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Button, Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -37,6 +38,7 @@ export default function HomeScreen() {
       <Container>
         <HeaderViewContainer>
           <HeadingText>Bine ai venit!!!</HeadingText>
+
           <UserAvatar onPress={() => navigate('ProfileNavigation')}>
             <Ionicons name="person" size={12} color={'#000'} />
           </UserAvatar>
@@ -44,6 +46,7 @@ export default function HomeScreen() {
 
         <FlatListContainer>
           <MediumText>Alege o categorie de mai jos</MediumText>
+
           <FlatList
             data={CategoryData}
             scrollEnabled={false}
@@ -88,12 +91,26 @@ export default function HomeScreen() {
                     }}>
                     Vezi detalii
                   </Button>
+                  <Button
+                    onPress={() => {
+                      navigate('PlaceScreen', {placeId: place.id});
+                    }}>
+                    Adauga la traseu
+                  </Button>
                 </Card.Actions>
               </Card>
             </ItemContainer>
           ))}
         </View>
       </Container>
+      <FAB
+        buttonColor="purple"
+        iconTextColor="#FFFFFF"
+        onClickAction={() => {
+          console.log('FAB pressed');
+        }}
+        visible={true}
+      />
     </ScrollView>
   );
 }

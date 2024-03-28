@@ -1,6 +1,7 @@
 import {useRoute} from '@react-navigation/native';
-import {useMemo} from 'react';
-import {Card, Text} from 'react-native-paper';
+import React, {useMemo} from 'react';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Button, Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../components';
@@ -17,16 +18,25 @@ export default function PlaceScreen() {
   console.log(place);
 
   return (
-    <Container>
-      <Header title="Detalii" canGoBack screen="Home" />
-      <Card mode="contained">
-        {place && <Card.Cover source={place?.image} />}
-        <Card.Content>
-          <Text variant="titleLarge">{place?.location}</Text>
-          <Text variant="bodyMedium">{place?.details}</Text>
-        </Card.Content>
-      </Card>
-    </Container>
+    <ScrollView>
+      <Container>
+        <Header title="Detalii" canGoBack screen="Home" />
+        <Card mode="contained">
+          {place && <Card.Cover source={place?.image} />}
+          <Card.Content>
+            <Text variant="titleLarge">{place?.name}</Text>
+            <Text variant="titleMedium">{place?.location}</Text>
+            <Text variant="bodyMedium">{place?.details}</Text>
+          </Card.Content>
+        </Card>
+        <Button
+          onPress={() => {
+            console.log(place);
+          }}>
+          Adauga la Traseu
+        </Button>
+      </Container>
+    </ScrollView>
   );
 }
 

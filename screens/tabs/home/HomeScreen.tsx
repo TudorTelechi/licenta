@@ -78,7 +78,7 @@ export default function HomeScreen() {
               <Card mode="outlined">
                 <Card.Cover source={place.image} />
                 <Card.Content>
-                  <Text variant="titleLarge">{place.location}</Text>
+                  <Text variant="titleLarge">{place.name}</Text>
                   <Text variant="bodyMedium">
                     {CategoryData.find(x => x?.value === place.category)
                       ?.title || ''}
@@ -107,6 +107,7 @@ export default function HomeScreen() {
         buttonColor="purple"
         iconTextColor="#FFFFFF"
         onClickAction={() => {
+          navigate('ProfileNavigation');
           console.log('FAB pressed');
         }}
         visible={true}

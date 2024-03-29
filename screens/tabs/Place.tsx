@@ -6,7 +6,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../components';
 import {PlacesData} from '../../constants/places';
-
 export default function PlaceScreen() {
   const route = useRoute();
   const placeId = (route.params as any)?.placeId;
@@ -32,8 +31,10 @@ export default function PlaceScreen() {
         <Button
           onPress={() => {
             console.log(place);
-          }}>
-          Adauga la Traseu
+          }}
+          style={{backgroundColor: 'purple'}}
+          labelStyle={{color: 'white'}}>
+          Adaugă la Traseu
         </Button>
       </Container>
     </ScrollView>

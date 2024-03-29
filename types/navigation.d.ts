@@ -11,7 +11,7 @@ type AuthNavigationType = {
 
 type TabNavigationType = {
   ProfileNavigation: undefined;
-  RouteScreen: undefined;
+  RouteScreen: {selectedLocations: Array<number>};
   HomeNavigation: undefined;
   ExploreNavigation: undefined;
   BookmarksNavigation: undefined;

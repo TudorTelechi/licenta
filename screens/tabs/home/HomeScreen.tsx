@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Button, Card, FAB, Text} from 'react-native-paper';
+import {Badge, Button, Card, FAB, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {
@@ -37,6 +37,8 @@ export default function HomeScreen() {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
+
+  const [selectedLocations, setSelectedLocations] = useState<Array<number>>([]);
 
   return (
     <>
@@ -98,10 +100,13 @@ export default function HomeScreen() {
                       Vezi detalii
                     </Button>
                     <Button
+                      disabled={selectedLocations.includes(place.id)}
                       onPress={() => {
-                        navigate('PlaceScreen', {placeId: place.id});
+                        setSelectedLocations([...selectedLocations, place.id]);
                       }}>
-                      Adauga la traseu
+                      {selectedLocations.includes(place.id)
+                        ? 'Deja Adaugat'
+                        : 'Adauga la traseu'}
                     </Button>
                   </Card.Actions>
                 </Card>
@@ -110,14 +115,18 @@ export default function HomeScreen() {
           </View>
         </Container>
       </ScrollView>
-      <FAB
-        icon="cart"
-        style={styles.fab}
-        color="purple"
-        onPress={() => {
-          navigate('RouteScreen');
-        }}
-      />
+      <View style={styles.fab}>
+        <Badge visible={!!selectedLocations.length}>
+          {selectedLocations.length}
+        </Badge>
+        <FAB
+          icon="cart"
+          color="purple"
+          onPress={() => {
+            navigate('RouteScreen', {selectedLocations});
+          }}
+        />
+      </View>
     </>
   );
 }

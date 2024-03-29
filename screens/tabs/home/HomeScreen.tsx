@@ -1,10 +1,15 @@
 import {Ionicons} from '@expo/vector-icons';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {useState} from 'react';
-import {FlatList, Image, TouchableOpacity, View} from 'react-native';
-import FAB from 'react-native-fab';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Button, Card, Text} from 'react-native-paper';
+import {Button, Card, FAB, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {
@@ -34,87 +39,98 @@ export default function HomeScreen() {
   };
 
   return (
-    <ScrollView>
-      <Container>
-        <HeaderViewContainer>
-          <HeadingText>Bine ai venit!!!</HeadingText>
+    <>
+      <ScrollView>
+        <Container>
+          <HeaderViewContainer>
+            <HeadingText>Bine ai venit!!!</HeadingText>
 
-          <UserAvatar onPress={() => navigate('ProfileNavigation')}>
-            <Ionicons name="person" size={12} color={'#000'} />
-          </UserAvatar>
-        </HeaderViewContainer>
+            <UserAvatar onPress={() => navigate('ProfileNavigation')}>
+              <Ionicons name="person" size={12} color={'#000'} />
+            </UserAvatar>
+          </HeaderViewContainer>
 
-        <FlatListContainer>
-          <MediumText>Alege o categorie de mai jos</MediumText>
+          <FlatListContainer>
+            <MediumText>Alege o categorie de mai jos</MediumText>
 
-          <FlatList
-            data={CategoryData}
-            scrollEnabled={false}
-            renderItem={({item}) => (
-              <IconContainer
-                style={{
-                  backgroundColor:
-                    item.title === activeCategory ? '#000' : '#fff',
-                  borderWidth: item.value === activeCategory ? 0 : 1,
-                }}
-                onPress={() => setActiveCategory(item.value)}>
-                <Icon source={item.image} />
-                {item.value === activeCategory ? (
-                  <BoldText>{item.title}</BoldText>
-                ) : (
-                  <RegularText>{item.title}</RegularText>
-                )}
-              </IconContainer>
-            )}
-            horizontal
-            contentContainerStyle={{gap: 12, width: '100%', flexWrap: 'wrap'}}
-            showsHorizontalScrollIndicator={false}
-          />
-        </FlatListContainer>
-        {/* Render the filtered places */}
-        <View>
-          {filteredPlaces.map(place => (
-            <ItemContainer>
-              <Card mode="outlined">
-                <Card.Cover source={place.image} />
-                <Card.Content>
-                  <Text variant="titleLarge">{place.name}</Text>
-                  <Text variant="bodyMedium">
-                    {CategoryData.find(x => x?.value === place.category)
-                      ?.title || ''}
-                  </Text>
-                </Card.Content>
-                <Card.Actions>
-                  <Button
-                    onPress={() => {
-                      navigate('PlaceScreen', {placeId: place.id});
-                    }}>
-                    Vezi detalii
-                  </Button>
-                  <Button
-                    onPress={() => {
-                      navigate('PlaceScreen', {placeId: place.id});
-                    }}>
-                    Adauga la traseu
-                  </Button>
-                </Card.Actions>
-              </Card>
-            </ItemContainer>
-          ))}
-        </View>
-      </Container>
+            <FlatList
+              data={CategoryData}
+              scrollEnabled={false}
+              renderItem={({item}) => (
+                <IconContainer
+                  style={{
+                    backgroundColor:
+                      item.title === activeCategory ? '#000' : '#fff',
+                    borderWidth: item.value === activeCategory ? 0 : 1,
+                  }}
+                  onPress={() => setActiveCategory(item.value)}>
+                  <Icon source={item.image} />
+                  {item.value === activeCategory ? (
+                    <BoldText>{item.title}</BoldText>
+                  ) : (
+                    <RegularText>{item.title}</RegularText>
+                  )}
+                </IconContainer>
+              )}
+              horizontal
+              contentContainerStyle={{gap: 12, width: '100%', flexWrap: 'wrap'}}
+              showsHorizontalScrollIndicator={false}
+            />
+          </FlatListContainer>
+          {/* Render the filtered places */}
+          <View>
+            {filteredPlaces.map(place => (
+              <ItemContainer>
+                <Card mode="outlined">
+                  <Card.Cover source={place.image} />
+                  <Card.Content>
+                    <Text variant="titleLarge">{place.name}</Text>
+                    <Text variant="bodyMedium">
+                      {CategoryData.find(x => x?.value === place.category)
+                        ?.title || ''}
+                    </Text>
+                  </Card.Content>
+                  <Card.Actions>
+                    <Button
+                      onPress={() => {
+                        navigate('PlaceScreen', {placeId: place.id});
+                      }}>
+                      Vezi detalii
+                    </Button>
+                    <Button
+                      onPress={() => {
+                        navigate('PlaceScreen', {placeId: place.id});
+                      }}>
+                      Adauga la traseu
+                    </Button>
+                  </Card.Actions>
+                </Card>
+              </ItemContainer>
+            ))}
+          </View>
+        </Container>
+      </ScrollView>
       <FAB
-        buttonColor="purple"
-        iconTextColor="#FFFFFF"
-        onClickAction={() => {
-          navigate('ProfileNavigation');
-          console.log('FAB pressed');
+        icon="cart"
+        style={styles.fab}
+        color="purple"
+        onPress={() => {
+          navigate('RouteScreen');
         }}
-        visible={true}
       />
-    </ScrollView>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  fab: {
+    position: 'absolute',
+    color: 'purple',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+});
 
 const Container = styled(SafeAreaView)`
   flex: 1;

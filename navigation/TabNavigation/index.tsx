@@ -1,5 +1,6 @@
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import PlaceScreen from '../../screens/tabs/Place';
+import RouteScreen from '../../screens/tabs/RouteScreen';
 import HomeNavigation from './HomeNavigation';
 import ProfileNavigation from './ProfileNavigation';
 
@@ -18,6 +19,7 @@ export default function TabNavigation() {
       <Stack.Screen name="HomeNavigation" component={HomeNavigation} />
       <Stack.Screen name="ProfileNavigation" component={ProfileNavigation} />
       <Stack.Screen name="PlaceScreen" component={PlaceScreen} />
+      <Stack.Screen name="RouteScreen" component={RouteScreen} />
     </Stack.Navigator>
   );
 }

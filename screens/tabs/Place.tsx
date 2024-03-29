@@ -28,6 +28,7 @@ export default function PlaceScreen() {
             <Text variant="bodyMedium">{place?.details}</Text>
           </Card.Content>
         </Card>
+
         <Button
           onPress={() => {
             console.log(place);

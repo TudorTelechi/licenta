@@ -1,40 +1,55 @@
-import {useRoute} from '@react-navigation/core';
-import React, {useMemo} from 'react';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import React from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
+import {Button, Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../components';
-import {PlacesData, PlacesDataType} from '../../constants/places';
+import {PlacesData} from '../../constants/places';
 
 export default function RouteScreen() {
+  const navigation = useNavigation();
   const route = useRoute();
 
   const selectedLocations: Array<number> =
     (route.params as any)?.selectedLocations || [];
 
-  const places = useMemo(() => {
-    return selectedLocations
-      .map(placeId => PlacesData.find(place => place.id === placeId))
-      .filter(place => place !== undefined) as PlacesDataType[];
-  }, [selectedLocations]);
-
   return (
     <ScrollView>
       <Container>
-        <Header title="Trasee alese" canGoBack screen="Home" />
+        <Header title="Locatii alese" canGoBack screen="Home" />
         <SelectedLocationsContainer>
-          {places.length > 0 ? (
-            places.map(place => (
-              <SelectedLocationItem key={place.id}>
-                <LocationName>{place.name}</LocationName>
-
-                {/* Afișează alte informații despre locație aici */}
-              </SelectedLocationItem>
-            ))
+          {selectedLocations.length > 0 ? (
+            selectedLocations.map(placeId => {
+              const place = PlacesData.find(place => place.id === placeId);
+              if (!place) return null;
+              return (
+                <ItemContainer key={place.id}>
+                  <Card mode="outlined">
+                    <Card.Cover source={place.image} />
+                    <Card.Content>
+                      <Text variant="titleLarge">{place.name}</Text>
+                    </Card.Content>
+                    <Card.Actions>
+                      <Button
+                        onPress={() => {
+                          // Logică pentru ștergere din traseu
+                        }}
+                        style={{
+                          backgroundColor: 'red',
+                        }}>
+                        <Text style={{color: 'white'}}>Șterge din traseu</Text>
+                      </Button>
+                    </Card.Actions>
+                  </Card>
+                </ItemContainer>
+              );
+            })
           ) : (
-            <NoLocationsText>
-              Nu ai selectat încă nicio locație.
-            </NoLocationsText>
+            // Mesajul și butonul atunci când nu sunt locații selectate
+            <NoLocationsContainer>
+              <NoLocationsText>Nu ai selectat nicio locație.</NoLocationsText>
+            </NoLocationsContainer>
           )}
         </SelectedLocationsContainer>
       </Container>
@@ -52,23 +67,16 @@ const SelectedLocationsContainer = styled.View`
   margin-top: 20px;
 `;
 
-const SelectedLocationItem = styled.View`
+const ItemContainer = styled.View`
   margin-bottom: 20px;
 `;
 
-const LocationName = styled.Text`
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const LocationDescription = styled.Text`
-  margin-top: 8px;
-  font-size: 16px;
+const NoLocationsContainer = styled.View`
+  margin-top: 20px;
+  align-items: center;
 `;
 
 const NoLocationsText = styled.Text`
-  font-size: 16px;
-  color: #888;
-  text-align: center;
-  margin-top: 20px;
+  font-size: 18px;
+  margin-bottom: 20px;
 `;

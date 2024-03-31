@@ -100,13 +100,26 @@ export default function HomeScreen() {
                       Vezi detalii
                     </Button>
                     <Button
-                      disabled={selectedLocations.includes(place.id)}
                       onPress={() => {
-                        setSelectedLocations([...selectedLocations, place.id]);
+                        if (selectedLocations.includes(place.id)) {
+                          setSelectedLocations(
+                            selectedLocations.filter(id => id !== place.id),
+                          );
+                        } else {
+                          setSelectedLocations([
+                            ...selectedLocations,
+                            place.id,
+                          ]);
+                        }
+                      }}
+                      style={{
+                        backgroundColor: selectedLocations.includes(place.id)
+                          ? 'red'
+                          : 'purple',
                       }}>
                       {selectedLocations.includes(place.id)
-                        ? 'Deja Adaugat'
-                        : 'Adauga la traseu'}
+                        ? 'Șterge din traseu'
+                        : 'Adaugă la traseu'}
                     </Button>
                   </Card.Actions>
                 </Card>

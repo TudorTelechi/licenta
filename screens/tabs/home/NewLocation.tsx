@@ -1,9 +1,11 @@
-import {addDoc, collection} from '@firebase/firestore';
-import React from 'react';
+import * as ImagePicker from 'expo-image-picker';
+import {addDoc, collection} from 'firebase/firestore';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
+import React, {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {Button, RadioButton, Text, TextInput} from 'react-native-paper';
-import {firestore} from '../../../config/firebaseConfig'; // Actualizează calea dacă e necesar
+import {firestore, storage} from '../../../config/firebaseConfig'; // Actualizează calea dacă e necesar
 
 const categories = ['mountains', 'temples', 'lakes'];
 
@@ -13,6 +15,7 @@ type FormData = {
   location: string;
   details: string;
   category: 'mountains' | 'temples' | 'lakes';
+  image: string;
 };
 
 const MyFormPage = () => {
@@ -21,10 +24,34 @@ const MyFormPage = () => {
     handleSubmit,
     formState: {errors},
   } = useForm<FormData>();
+  const [image, setImage] = useState<string | null>(null);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
 
   const onSubmit = async (data: FormData) => {
     try {
-      await addDoc(collection(firestore, 'locations'), data);
+      let imageUrl = '';
+      if (image) {
+        const response = await fetch(image);
+        const blob = await response.blob();
+        const imageRef = ref(storage, `images/${data.id}`);
+        await uploadBytes(imageRef, blob);
+        imageUrl = await getDownloadURL(imageRef);
+      }
+
+      const documentData = {...data, image: imageUrl};
+      await addDoc(collection(firestore, 'locations'), documentData);
       console.log('Document written with ID: ', data.id);
     } catch (e) {
       console.error('Error adding document: ', e);
@@ -32,7 +59,7 @@ const MyFormPage = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topSpace} />
       <Text style={styles.title}>Formular de Adăugare</Text>
 
@@ -145,19 +172,24 @@ const MyFormPage = () => {
         <Text style={styles.error}>Categoria este obligatorie.</Text>
       )}
 
+      <Button mode="contained" onPress={pickImage} style={styles.button}>
+        Alege Imagine
+      </Button>
+      {image && <Image source={{uri: image}} style={styles.image} />}
+
       <Button
         mode="contained"
         onPress={handleSubmit(onSubmit)}
         style={styles.button}>
         Submit
       </Button>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
     backgroundColor: '#f5f5f5',
   },
@@ -182,6 +214,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   button: {
+    marginTop: 20,
+  },
+  image: {
+    width: 200,
+    height: 200,
     marginTop: 20,
   },
   error: {

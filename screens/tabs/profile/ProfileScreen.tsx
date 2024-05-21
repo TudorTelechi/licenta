@@ -5,8 +5,8 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {StatusBar} from 'expo-status-bar';
-import {useCallback, useState} from 'react';
-import {View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {Image, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../../components';
@@ -89,7 +89,13 @@ export default function ProfileScreen() {
         <Button
           variant="destructive"
           title="Sign out"
-          icon={<Ionicons name="log-out-outline" size={20} color={'#fff'} />}
+          icon={
+            avatarUrl ? (
+              <Image source={{uri: avatarUrl}} width={20} />
+            ) : (
+              <Ionicons name="log-out-outline" size={20} color={'#fff'} />
+            )
+          }
           onPress={() => handleSignOut()}
         />
       </InputContainer>

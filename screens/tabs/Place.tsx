@@ -1,7 +1,7 @@
 import {useRoute} from '@react-navigation/native';
 import React, {useMemo} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
-import {Button, Card, Text} from 'react-native-paper';
+import {Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../components';
@@ -28,15 +28,6 @@ export default function PlaceScreen() {
             <Text variant="bodyMedium">{place?.details}</Text>
           </Card.Content>
         </Card>
-
-        <Button
-          onPress={() => {
-            console.log(place);
-          }}
-          style={{backgroundColor: 'purple'}}
-          labelStyle={{color: 'white'}}>
-          Adaugă la Traseu
-        </Button>
       </Container>
     </ScrollView>
   );

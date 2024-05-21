@@ -1,10 +1,6 @@
 import {Ionicons} from '@expo/vector-icons';
-import {
-  NavigationProp,
-  useFocusEffect,
-  useNavigation,
-} from '@react-navigation/native';
-import {useCallback, useState} from 'react';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -24,8 +20,6 @@ import {
 } from '../../../components/StyledText';
 import {CategoryData} from '../../../constants/categories';
 import {PlacesData, PlacesDataType} from '../../../constants/places';
-import {useFirebaseAuth} from '../../../hooks';
-import {useUserStore} from '../../../store/useUserStore';
 
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -46,75 +40,21 @@ export default function HomeScreen() {
 
   const [selectedLocations, setSelectedLocations] = useState<Array<number>>([]);
 
-  const role = 'administrator' as string;
-
-  const [loading, setLoading] = useState(false);
-  const [username, setUsername] = useState('');
-  const [fullName, setFullName] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const {getUserProfile} = useFirebaseAuth();
-  const {session} = useUserStore();
-
-  async function handleGetProfile() {
-    setLoading(true);
-
-    try {
-      const {data, error} = await getUserProfile();
-
-      if (error) {
-        setLoading(false);
-        throw error;
-      }
-
-      if (data) {
-        setUsername(data.username);
-        setFullName(data.full_name);
-        setAvatarUrl(data.avatar_url);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useFocusEffect(
-    useCallback(() => {
-      if (session) {
-        handleGetProfile();
-      }
-    }, [session]),
-  );
-
-  console.log({avatarUrl});
-
   return (
     <>
       <ScrollView>
         <Container>
           <HeaderViewContainer>
-            <HeadingText>Bine ai venit!!!</HeadingText>
-            {role === 'administrator' && (
-              <Button
-                onPress={() => {
-                  navigate('AdminPanel');
-                }}>
-                Admin Pannel
-              </Button>
-            )}
+            <HeadingText>Admin Panel</HeadingText>
+            <Button
+              onPress={() => {
+                navigate('NewLocation');
+              }}>
+              New Location
+            </Button>
+
             <UserAvatar onPress={() => navigate('ProfileNavigation')}>
-              {avatarUrl ? (
-                <Image
-                  source={{
-                    uri: avatarUrl,
-                  }}
-                  width={40}
-                  height={40}
-                  borderRadius={20}
-                />
-              ) : (
-                <Ionicons name="person" size={12} color={'#000'} />
-              )}
+              <Ionicons name="person" size={12} color={'#000'} />
             </UserAvatar>
           </HeaderViewContainer>
 
@@ -163,7 +103,7 @@ export default function HomeScreen() {
                       onPress={() => {
                         navigate('PlaceScreen', {placeId: place.id});
                       }}>
-                      Vezi detalii
+                      Editeaza Locatie
                     </Button>
                     <Button
                       onPress={() => {
@@ -185,7 +125,7 @@ export default function HomeScreen() {
                       }}>
                       {selectedLocations.includes(place.id)
                         ? 'Șterge din traseu'
-                        : 'Adaugă la traseu'}
+                        : 'Sterge Locatie'}
                     </Button>
                   </Card.Actions>
                 </Card>

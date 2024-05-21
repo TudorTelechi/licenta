@@ -16,6 +16,8 @@ type TabNavigationType = {
   ExploreNavigation: undefined;
   BookmarksNavigation: undefined;
   PlaceScreen: {placeId: number};
+  AdminPanel: undefined;
+  NewLocation: undefined;
 };
 
 //tabs nav types

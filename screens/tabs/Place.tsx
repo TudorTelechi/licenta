@@ -5,23 +5,28 @@ import {Card, Text} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import {Header} from '../../components';
-import {PlacesData} from '../../constants/places';
+import useLocations from '../../hooks/useLocations';
+
 export default function PlaceScreen() {
   const route = useRoute();
   const placeId = (route.params as any)?.placeId;
+  console.log({placeId});
+
+  const {locations} = useLocations();
 
   const place = useMemo(() => {
-    return PlacesData.find(place => place.id === placeId);
-  }, [placeId]);
+    return locations.find(place => place.id === placeId);
+  }, [locations, placeId]);
 
-  console.log(place);
+  const image = place?.image;
+  console.log(image);
 
   return (
     <ScrollView>
       <Container>
         <Header title="Detalii" canGoBack screen="Home" />
         <Card mode="contained">
-          {place && <Card.Cover source={place?.image} />}
+          {image && <Card.Cover source={{uri: image as string}} />}
           <Card.Content>
             <Text variant="titleLarge">{place?.name}</Text>
             <Text variant="titleMedium">{place?.location}</Text>

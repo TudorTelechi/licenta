@@ -26,7 +26,7 @@ export default function RouteScreen() {
               return (
                 <ItemContainer key={place.id}>
                   <Card mode="outlined">
-                    <Card.Cover source={place.image} />
+                    <Card.Cover source={{uri: place.image as string}} />
                     <Card.Content>
                       <Text variant="titleLarge">{place.name}</Text>
                     </Card.Content>

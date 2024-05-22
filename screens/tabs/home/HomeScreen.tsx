@@ -23,8 +23,9 @@ import {
   RegularText,
 } from '../../../components/StyledText';
 import {CategoryData} from '../../../constants/categories';
-import {PlacesData, PlacesDataType} from '../../../constants/places';
+import {PlacesDataType} from '../../../constants/places';
 import {useFirebaseAuth} from '../../../hooks';
+import useLocations from '../../../hooks/useLocations';
 import {useUserStore} from '../../../store/useUserStore';
 
 export default function HomeScreen() {
@@ -33,8 +34,11 @@ export default function HomeScreen() {
   const {navigate}: NavigationProp<TabNavigationType> = useNavigation();
 
   console.log({activeCategory});
+
+  const {locations} = useLocations();
+
   // Filter places based on the active category and search query
-  const filteredPlaces: PlacesDataType[] = PlacesData.filter(
+  const filteredPlaces: PlacesDataType[] = locations.filter(
     place => activeCategory == 'all' || place.category === activeCategory,
     // && place.location.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -150,7 +154,9 @@ export default function HomeScreen() {
             {filteredPlaces.map(place => (
               <ItemContainer>
                 <Card mode="outlined">
-                  <Card.Cover source={place.image} />
+                  {place?.image && (
+                    <Card.Cover source={{uri: place.image as string}} />
+                  )}
                   <Card.Content>
                     <Text variant="titleLarge">{place.name}</Text>
                     <Text variant="bodyMedium">

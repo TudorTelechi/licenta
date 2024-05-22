@@ -7,7 +7,7 @@ export type PlacesDataType = {
   location: string;
   details: string;
   category: 'mountains' | 'temples' | 'lakes';
-  image: ImageSourcePropType;
+  image: ImageSourcePropType | string;
 };
 
 export const PlacesData: PlacesDataType[] = [

@@ -2,8 +2,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
-} from '@firebase/auth';
-import {doc, getDoc, setDoc} from '@firebase/firestore';
+} from 'firebase/auth';
+import {doc, getDoc, setDoc} from 'firebase/firestore';
 import {auth, firestore as db} from '../config/firebaseConfig';
 import {useUserStore} from '../store/useUserStore';
 

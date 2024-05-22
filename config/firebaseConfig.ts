@@ -1,7 +1,7 @@
-import {initializeApp} from '@firebase/app';
-import {getAuth} from '@firebase/auth';
-import {initializeFirestore} from '@firebase/firestore';
-import {getStorage} from '@firebase/storage';
+import {initializeApp} from 'firebase/app';
+import {getAuth} from 'firebase/auth';
+import {initializeFirestore} from 'firebase/firestore';
+import {getStorage} from 'firebase/storage';
 
 // Initialize Firebase
 const firebaseConfig = {

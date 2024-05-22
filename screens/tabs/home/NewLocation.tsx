@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import {addDoc, collection} from 'firebase/firestore';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
@@ -26,6 +27,8 @@ const MyFormPage = () => {
   } = useForm<FormData>();
   const [image, setImage] = useState<string | null>(null);
 
+  const navigation = useNavigation();
+
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -53,6 +56,8 @@ const MyFormPage = () => {
       const documentData = {...data, image: imageUrl};
       await addDoc(collection(firestore, 'locations'), documentData);
       console.log('Document written with ID: ', data.id);
+
+      navigation.goBack();
     } catch (e) {
       console.error('Error adding document: ', e);
     }

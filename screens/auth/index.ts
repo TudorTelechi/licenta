@@ -1,10 +1,6 @@
-export {default as LoginScreen} from './LoginScreen';
-export {default as SignupScreen} from './SignupScreen';
-export {default as WelcomeScreen} from './WelcomeScreen';
-export {auth, db};
-import {initializeApp} from '@firebase/app';
-import {getAuth} from '@firebase/auth';
-import {getFirestore} from '@firebase/firestore';
+import {initializeApp} from 'firebase/app';
+import {getAuth} from 'firebase/auth';
+import {getFirestore} from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCACR_xu3fiAntx-MLq9P6O3eF2SgXWGBk',
@@ -18,3 +14,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+export {default as LoginScreen} from './LoginScreen';
+export {default as SignupScreen} from './SignupScreen';
+export {default as WelcomeScreen} from './WelcomeScreen';
+export {auth, db};
